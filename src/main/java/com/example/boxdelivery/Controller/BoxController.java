@@ -1,6 +1,5 @@
 package com.example.boxdelivery.Controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.boxdelivery.Model.BaseResponse;
 import com.example.boxdelivery.Model.Box;
 import com.example.boxdelivery.Model.Item;
 import com.example.boxdelivery.Service.BoxService;
@@ -21,38 +21,39 @@ public class BoxController {
     @Autowired
     private BoxService boxService;
 
+
     @PostMapping
-    public Box createBox(@RequestBody Box box) {
-        return boxService.createBox(box);
+    public BaseResponse createBox(@RequestBody Box box) {
+        return new BaseResponse(200, "Success", boxService.createBox(box));
     }
 
     @PostMapping("/{txref}/load")
-    public Box loadBox(@PathVariable String txref, @RequestBody Item item) {
-        return boxService.loadBox(txref, item);
+    public BaseResponse loadBox(@PathVariable String txref, @RequestBody Item item) {
+        return new BaseResponse(200, "Success", boxService.loadBox(txref, item));
     }
 
     @GetMapping("/{txref}/battery")
-    public int checkBattery(@PathVariable String txref) {
-        return boxService.checkBattery(txref);
+    public BaseResponse checkBattery(@PathVariable String txref) {
+        return new BaseResponse(200, "Success", boxService.checkBattery(txref));
     }
 
     @GetMapping("/{txref}/items")
-    public List<Item> getLoadedItems(@PathVariable String txref) {
-        return boxService.getLoadedItems(txref);
+    public BaseResponse getLoadedItems(@PathVariable String txref) {
+        return new BaseResponse(200, "Success", boxService.getLoadedItems(txref));
     }
 
     @GetMapping("/available")
-    public List<Box> getAvailableBoxes() {
-        return boxService.getAvailableBoxes();
+    public BaseResponse getAvailableBoxes() {
+        return new BaseResponse(200, "Success", boxService.getAvailableBoxes());
     }
 
     @GetMapping
-    public List<Box> getAllBoxes() {
-        return boxService.getAllBoxes();
+    public BaseResponse getAllBoxes() {
+        return new BaseResponse(200, "Success", boxService.getAllBoxes());
     }
 
     @GetMapping("/{txref}")
-    public Box getBox(@PathVariable String txref) {
-        return boxService.getBox(txref);
+    public BaseResponse getBox(@PathVariable String txref) {
+        return new BaseResponse(200, "Success", boxService.getBox(txref));
     }
 }

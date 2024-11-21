@@ -5,6 +5,7 @@ This project is a simple REST API for managing boxes used for dispatching small 
 ## Requirements
 
 - Java 17 or later
+- Spring Boot 3.3.5
 - Maven
 - H2 Database (preconfigured for development test)
 - MySQL
@@ -39,4 +40,9 @@ This project is a simple REST API for managing boxes used for dispatching small 
 
 ## Testing
 
-You can test the API using tools like Postman or curl.
+Test can be done with Postman or curl as well as with Maven
+
+```bash
+mvn test
+
+```

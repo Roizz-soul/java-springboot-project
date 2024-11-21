@@ -10,6 +10,8 @@ import com.example.boxdelivery.Model.Box;
 import com.example.boxdelivery.Model.Item;
 import com.example.boxdelivery.Repository.BoxRepository;
 
+
+
 @Service
 public class BoxService {
     @Autowired
@@ -63,7 +65,7 @@ public class BoxService {
             if (remainingCap == 0) {
                 box.setState(BoxState.LOADED);
             } else {
-                box.setState(BoxState.IDLE);
+                box.setState(BoxState.LOADING);
             }
             
             return boxRepository.save(box);
