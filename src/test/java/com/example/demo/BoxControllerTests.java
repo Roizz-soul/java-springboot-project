@@ -50,7 +50,7 @@ class BoxControllerTests {
         // Create a new Box
         //Box newBox = new Box("BOX002", 300, 80, "IDLE");
 
-        mockMvc.perform(post("/api/boxes")
+        mockMvc.perform(post("http://localhost:8080/boxes")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"txref\":\"BOX002\",\"weightLimit\":300,\"batteryCapacity\":80,\"state\":\"IDLE\"}"))
                 .andExpect(status().isCreated())
@@ -63,7 +63,7 @@ class BoxControllerTests {
     @Test
     void testGetBoxByTxref() throws Exception {
         // Get Box by txref
-        mockMvc.perform(get("/api/boxes/BOX002"))
+        mockMvc.perform(get("http://localhost:8080/boxes/BOX002"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.txref").value("BOX002"))
                 .andExpect(jsonPath("$.weightLimit").value(300))
@@ -74,7 +74,7 @@ class BoxControllerTests {
     @Test
     void testLoadItemsIntoBox() throws Exception {
         // Load items into a box
-        mockMvc.perform(put("/api/boxes/BOX001/load")
+        mockMvc.perform(put("http://localhost:8080/boxes/BOX001/load")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("[{\"name\":\"Item-1\",\"weight\":100,\"code\":\"ITEM1\"}]"))
                 .andExpect(status().isOk())
@@ -85,7 +85,7 @@ class BoxControllerTests {
     @Test
     void testCheckLoadedItems() throws Exception {
         // Check loaded items in a box
-        mockMvc.perform(get("/api/boxes/BOX002/items"))
+        mockMvc.perform(get("http://localhost:8080/boxes/BOX002/items"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("Item-1"))
                 .andExpect(jsonPath("$[0].weight").value(100))
@@ -95,7 +95,7 @@ class BoxControllerTests {
     @Test
     void testGetAvailableBoxesForLoading() throws Exception {
         // Get available boxes for loading (boxes that are in IDLE state and battery > 25%)
-        mockMvc.perform(get("/api/boxes/available"))
+        mockMvc.perform(get("http://localhost:8080/boxes/available"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].txref").value("BOX002"))
                 .andExpect(jsonPath("$[0].state").value("IDLE"));
@@ -104,7 +104,7 @@ class BoxControllerTests {
     @Test
     void testCheckBatteryLevelForBox() throws Exception {
         // Check battery level of a box
-        mockMvc.perform(get("/api/boxes/BOX001/battery"))
+        mockMvc.perform(get("http://localhost:8080/boxes/BOX001/battery"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.txref").value("BOX002"))
                 .andExpect(jsonPath("$.batteryCapacity").value(80));
